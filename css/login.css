@@ -1,0 +1,209 @@
+@layer reset {
+  /* Reset CSS styles to ensure consistent rendering across browsers */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    /* exclude padding and border from element's total width and height */
+  }
+
+  /* https://kilianvalkhof.com/2022/css-html/your-css-reset-needs-text-size-adjust-probably/ */
+  html {
+    -moz-text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+    /* Prevent font size adjustment in landscape mode, primarily on iOS */
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  figure,
+  blockquote,
+  dl,
+  dd {
+    margin: 0;
+    /* reset margin for these elements because they are block-level elements, to avoid extra space */
+  }
+
+  /* https://www.scottohara.me/blog/2019/01/12/lists-and-safari.html */
+  [role="list"] {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    /* reset margin and padding for list elements and to avoid list elements announcing their presence, primarily in Safari */
+  }
+
+  body {
+    min-block-size: 100vh; /* to ensure the page content fills at least the full height of the browser window, even when there isn't enough content to naturally push it to that height. */
+    line-height: 1.6;
+    /* Prevent text from being too small on mobile devices */
+  }
+
+  h1,
+  h2,
+  h3,
+  button,
+  input,
+  label {
+    line-height: 1.1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance; /* balance text wrapping for better readability, adjust text wrapping behavior */
+  }
+
+  p,
+  li {
+    text-wrap: pretty; /* adjust text wrapping behavior for better readability, long text not to leave orphan words */
+  }
+
+  img,
+  picture {
+    max-inline-size: 100%;
+    display: block;
+    /* prevent images from being too wide for their containers */
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+    /* make form elements inherit font styles from their parent elements, normally they don't */
+  }
+}
+
+@layer base {
+  :root {
+    --color-white: hsl(0, 0%, 100%);
+    --color-black: hsl(0, 0%, 0%);
+    --color-brown: #8f1b02;
+
+    
+    --ff-main: "Jersey 15", sans-serif;
+
+    --fs-xs: 0.75rem; /* 12px */
+    --fs-s: 0.875rem; /* 14px */
+    --fs-m: 1rem; /* 16px */
+    --fs-ml: 1.125rem; /* 18px */
+    --fs-l: 1.25rem; /* 20px */
+    --fs-lx: 1.375rem; /* 22px */
+    --fs-xl: 1.5rem; /* 24px */
+
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+  }
+
+  html {
+    font-family: var(--ff-main);
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+  }
+}
+
+@layer layout {
+}
+
+@layer components {
+
+    .border{
+        border: 10px solid var(--color-brown);
+        border-radius: 2rem;
+        margin: auto;
+    }
+}
+
+@layer utilities {
+  .center {
+    justify-items: center;
+  }
+
+  .align-text {
+    margin-top: 1rem;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .row {
+    display: flex;
+  }
+
+  .no-decoration {
+    text-decoration: none;
+  }
+
+  .space-margin {
+    margin: 1rem;
+  }
+
+  .bg-btn {
+    display: inline-block;
+    width: 180px;
+    height: 60px;
+    background-image: url(../img/btnInterfaz.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding-top: 10px;
+    cursor: pointer;
+  }
+
+  .bg-btn:hover {
+    transform: scale(1.1);
+  }
+
+  .color-white {
+    color: var(--color-white);
+  }
+
+  
+
+  .text-xs {
+    font-size: var(--fs-xs);
+  }
+  .text-s {
+    font-size: var(--fs-s);
+  }
+  .text-m {
+    font-size: var(--fs-m);
+  }
+  .text-ml {
+    font-size: var(--fs-ml);
+  }
+  .text-l {
+    font-size: var(--fs-l);
+  }
+  .text-lx {
+    font-size: var(--fs-lx);
+  }
+
+  .regular {
+    font-weight: var(--fw-regular);
+  }
+  .medium {
+    font-weight: var(--fw-medium);
+  }
+  .semibold {
+    font-weight: var(--fw-semibold);
+  }
+  .bold {
+    font-weight: var(--fw-bold);
+  }
+}
