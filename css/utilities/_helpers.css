@@ -1,0 +1,33 @@
+@layer helpers {
+  .color-white {
+    color: var(--color-white);
+  }
+
+  .bg-white {
+    background-color: var(--color-white);
+  }
+
+  .bg-brown {
+    background-color: var(--color-brown);
+  }
+
+
+
+   .center{
+    justify-items: center;
+  }
+
+  .align-text {
+    margin-top: 1rem;
+  }
+
+  .row {
+    display: flex;
+  }
+
+ 
+  .space-margin {
+    margin: 0.8rem;
+  }
+
+}

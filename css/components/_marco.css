@@ -1,0 +1,10 @@
+@layer marco{
+  
+/*Form background*/
+    .border {
+    border-radius: 2rem;
+    padding: 2rem;
+    background: hsla(128, 76%, 10%, 0.4); 
+    
+  }
+}

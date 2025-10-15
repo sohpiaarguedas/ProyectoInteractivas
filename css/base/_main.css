@@ -1,0 +1,22 @@
+@layer main{
+
+    
+  html {
+    font-family: var(--ff-main);
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  /* Use transparent to remove the default white background and input so that it is applied to all */
+  input {
+    background-color: transparent; 
+  
+  }
+
+  
+}

@@ -1,0 +1,27 @@
+@layer buttonElement{
+
+  /*button background image*/
+    .bg-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    height: 60px;
+    background-image: url(../../img/btnInterfaz.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+
+   /* Transparent to remove the default background of the button and 
+   border none to prevent it from being marked */
+    background-color: transparent;
+    border: none;
+  }
+
+ /*To make the button bigger when you hover over it*/
+  .bg-btn:hover {
+    transform: scale(1.1);
+  }
+
+}

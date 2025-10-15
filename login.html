@@ -5,28 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/style.css">
     <!--typography-->
     <link href="https://fonts.googleapis.com/css2?family=Jersey+15:wght@400&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 
-<body>
+<body class="bg-zacate">
     <div>
         <div class="border">
             <div class="center" id="app">
                 <h1 class="text-xl">Login</h1>
-                <form class="space-margin" v-on:submit="login">
+                <form class="space-margin add" v-on:submit="login">
 
                     <label class="row text-l" for="">Username</label>
-                    <input class="space-margin" type="text" v-model="users.username">
+                    <input class="space-margin color-white" type="text" v-model="users.username">
                     <label class="row text-l" for="">Password</label>
-                    <input class="space-margin" type="password" v-model="users.password">
+                    <input class="space-margin color-white" type="password" v-model="users.password">
                     <button class="bg-btn color-white bold space-margin" type="submit">Login</button>
                 </form>
             </div>
-            <div class="text-center space-margin">
-                <p class="text-l">Don't have an account yet? </p>
+            <div class="text-center space-margin center">
+                <p class="text-xl ">Don't have an account yet? </p>
                 <p class="text-l"><a href="signUp.html" class="bg-btn no-decoration color-white bold  ">Sign up</a></p>
             </div>
         </div>

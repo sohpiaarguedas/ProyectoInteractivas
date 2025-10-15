@@ -1,0 +1,14 @@
+@layer screen{
+
+  /*Login and sign up background image*/
+  .bg-zacate {
+    background: url(../../img/zacate.jpg) ;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    height: 100%;
+    width: 100%;
+  }
+
+}

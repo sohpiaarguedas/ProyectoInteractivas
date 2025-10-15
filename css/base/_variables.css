@@ -1,0 +1,22 @@
+@layer variables{
+
+      :root {
+    --color-white: hsl(0, 0%, 100%);
+    --color-brown: #8f1b02;
+
+    --ff-main: "Jersey 15", sans-serif;
+
+    --fs-xs: 0.75rem; /* 12px */
+    --fs-s: 0.875rem; /* 14px */
+    --fs-m: 1rem; /* 16px */
+    --fs-ml: 1.125rem; /* 18px */
+    --fs-l: 1.25rem; /* 20px */
+    --fs-lx: 1.375rem; /* 22px */
+    --fs-xl: 1.5rem; /* 24px */
+
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+  }
+}
