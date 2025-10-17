@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,30 +10,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Jersey+15:wght@400&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
+
 <body class="bg-zacate ">
-    <div class="border  ">
-    <div class="center" id="app">
-        <h1>Sign up</h1>
-        <form v-on:submit="addUser">
-            <label class="row text-l" for="">Email</label>
-            <input class="space-margin color-white" type="text" v-model="users.email">
-            <label class="row text-l" for="">Birthdate</label>
-            <input class="space-margin color-white"  type="text" v-model="users.birthdate">
-            <label class="row text-l" for="">Username</label>
-            <input class="space-margin color-white" type="text" v-model="users.username">
-            <label class="row text-l" for="">Password</label>
-            <input class="space-margin color-white" type="password" v-model="users.password">
-            <button class="bg-btn color-white bold space-margin" type="submit">Sign up</button>
-        </form>
+    <div class="border" id="app">
+        <sign-up :users="users" >
+
+        </sign-up>
     </div>
-    <div class="center">
-        <p class="text-xl "> Already have an account?</p>
-        <p class="text-l"><a href="login.html" class="bg-btn no-decoration color-white bold space-margin">login</a></p>
-    </div>
-    </div>
-    <script src="js/script.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/signUp.js"></script>
     <script>
-    const mountedApp = app.mount('#app');
+        const mountedApp = app.mount('#app');
     </script>
 </body>
+
 </html>
