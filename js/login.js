@@ -20,13 +20,13 @@ app.component('login',{
     template: /*html*/ `
     <div class="center">
                 <h1 class="text-xl">Login</h1>
-                <form class="space-margin add" v-on:submit="login">
+                <form class="space-margin add" v-on:submit="login"  >
 
                     <label class="row text-l" for="">Username</label>
                     <input class="space-margin color-white" type="text" v-model="users.username">
                     <label class="row text-l" for="">Password</label>
                     <input class="space-margin color-white" type="password" v-model="users.password">
-                    <button class="bg-btn color-white bold space-margin" type="submit">Login</button>
+                    <button class="bg-btn color-white bold space-margin" type="submit"> </button>
                 </form>
             </div>
             <div class="text-center space-margin center">

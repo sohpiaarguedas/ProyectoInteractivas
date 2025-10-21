@@ -30,4 +30,32 @@
     margin: 0.8rem;
   }
 
+
+
+.cielo {
+  display: inline-flex;
+  padding-top: 5rem;
 }
+
+.row {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+}
+
+.espacio {
+  margin-top: 10rem;
+}
+
+.sprites {
+ 
+  width: 150px;
+  height: 100px;
+}
+
+
+}
+
+
+
