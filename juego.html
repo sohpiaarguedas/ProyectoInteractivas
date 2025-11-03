@@ -11,11 +11,14 @@
   <body>
     <div id="app">
   <juego :pasto="pasto" :tierra="tierra" :columns="columns" :cells="cells" :seleccionado="seleccionado" :frutos="frutos" :sprites="sprites"
-  @arar="arar" @sembrar="sembrar" @acciones="acciones" @seleccionarFruto="seleccionarFruto"></juego>
+  @arar="arar" @sembrar="sembrar" @acciones="acciones" @seleccionar-fruto="seleccionarFruto" @regar="regar"></juego>
      
     </div>
+
+     
     <script src="js/main.js"></script>
     <script src="js/juego.js"></script>
+   
     <script>
       const mountedApp = app.mount("#app");
     </script>

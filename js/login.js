@@ -18,9 +18,11 @@ app.component('login',{
 
     },
     template: /*html*/ `
-    <div class="center">
+     
+
+    <div class="center ">
                 <h1 class="text-xl">Login</h1>
-                <form class="space-margin add"  @submit.prevent="juego.html"  >
+                <form class="space-margin add"  action="mainMenu.html"  >
 
                     <label class="row text-l" for="">Username</label>
                     <input class="space-margin color-white" type="text" v-model="users.username">
@@ -32,6 +34,8 @@ app.component('login',{
             <div class="text-center space-margin center">
                 <p class="text-xl ">Don't have an account yet? </p>
                 <p class="text-l"><a href="signUp.html" class="bg-btn no-decoration color-white bold  ">Sign up</a></p>
+           
+
             </div>
     `
 })

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!--typography-->
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+15:wght@400&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body class="bg-zacate bg-image" style="background-image: url('./img/interfazInicio.png')" >
+    <div>
+        <div class="border" id="app">
+            <div class="center " >
+            <img class="menu-logo"  src="img/Letras-inicio-decoradas.png" alt="Dealing With Farming">
+            <button class="bg-btn color-white bold space-margin" v-on:click="gotogame()" >Play</button>
+            <button class="bg-btn color-white bold space-margin" >Instructions</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+    <script src="js/mainMenu.js"></script>
+    <script>
+        const mountedApp = app.mount('#app');
+    </script>
+</body>
+
+</html>

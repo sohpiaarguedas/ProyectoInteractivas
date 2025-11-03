@@ -72,7 +72,7 @@ app.component('juego',{
             required: true
         },
 
-         /** @type {Object|null} sprites */
+         /** @type {Object|null} seleccionado */
         seleccionado: {
             type: Object,
             default: null
@@ -82,6 +82,12 @@ app.component('juego',{
         frutos: {
             type: Array,
             required: true
+        },
+        
+         /** @type {Array<Object>} sprites */
+        sprites:{
+          type:Array,
+          required:true
         }
 
  },
@@ -93,18 +99,7 @@ app.component('juego',{
     
  
   computed: {
-    floorGen() {
-      let floor = [];
-      for (let i = 0; i < this.columns; i++) {
-        let column = { index: i, espacio: [] };
-        for (let j = 0; j < this.cells; j++) {
-          column.espacio.push({ index: j, image: this.pasto });
-        }
-        floor.push(column);
-      }
-      this.sprites = floor;
-      return this.sprites;
-    },
+  
   },
   methods: {
 /*En proceso */
@@ -116,8 +111,12 @@ app.component('juego',{
         this.$emit('sembrar', indexColumn, indexCell);
     },
 
+    regar(indexColumn, indexCell){
+      this.$emit('regar', indexColumn, indexCell);
+    },
+
      seleccionarFruto(fruto) {
-      this.$emit('seleccionarFruto', fruto);
+      this.$emit('seleccionar-fruto', fruto);
     },
 
     acciones(indexColumn, indexCell) {
@@ -134,16 +133,18 @@ app.component('juego',{
             <button v-for="fruto in frutos" v-on:click="seleccionarFruto(fruto)">
               {{ fruto.tipo }}
             </button>
+            <button v-on:click="regar()">Regar </button>
+           
    
           </div>
         
-          <div class="row" v-for="column in floorGen" :key="column.index">
-            <div class="row" v-for="cell in column.espacio" :key="cell.index">
-             <img class="sprites" v-bind:src="cell.image" v-on:click="acciones(column.index, cell.index)">
-
-
-            </div>
-          </div>
+          <div class="row" 
+         v-for="(columnaSprite, indiceColumna) in sprites" :key="indiceColumna">
+        <div class="cell" v-for="(celdaSprite, indiceCelda) in columnaSprite.espacio" :key="indiceCelda">
+ 
+    <img class="sprites" :src="celdaSprite.image"  v-on:click="acciones(indiceColumna, indiceCelda)">
+  </div>
+</div>
 
         </div>
       </div>
