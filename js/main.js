@@ -24,28 +24,36 @@ const app = Vue.createApp({
       cells: 10,
       seleccionado: null,
       sprites: [],
+      dinero: 1000,
+      compra: null,
       frutos: [
         {
           tipo: "tomate",
+          semillaPaquete: "./img/Semillas_paquete_tomate.png",
           semilla: "./img/semillaPlantada.png",
           semillaMojada: "./img/semillaMojada.png",
           creciendo: "./img/tomateCrecimiento",
           cosecha: "tomate",
+          precio: 100
         },
         {
           tipo: "pepino",
+          semillaPaquete: "./img/Semillas_paquete_pepino.png",
           semilla: "./img/semillaPlantada.png",
           semillaMojada: "./img/semillaMojada.png",
           creciendo: "./img/pepinoCrecimiento",
           cosecha: "pepino",
+          precio: 200
         },
 
         {
           tipo: "zanahoria",
+          semillaPaquete: "./img/Semillas_paquete_zanahoria.png",
           semilla: "./img/semillaPlantada.png",
           semillaMojada: "./img/semillaMojada.png",
           creciendo: "./img/zanahoriaCrecimiento.png",
           cosecha: "zanahoria",
+          precio: 300
         },
       ],
     };
@@ -103,6 +111,17 @@ const app = Vue.createApp({
         this.arar(indexColumn, indexCell);
       }
     },
+
+    comprar(fruto){
+        if(this.dinero < fruto.precio){
+            alert("No tienes suficiente dinero para comprar este producto");
+        }else{
+            this.compra= fruto;
+            this.dinero= this.dinero - this.compra.precio;
+            
+        }
+        
+    }
   },
   mounted() {
     let floor = [];

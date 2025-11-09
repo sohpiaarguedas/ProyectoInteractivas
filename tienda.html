@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body class="bg-zacate">
+
+    <div>
+        <div class="border" id="app">
+            <tienda :frutos="frutos" :dinero="dinero" @comprar="comprar"></tienda>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/tienda.js"></script>
+   
+    <script>
+      const mountedApp = app.mount("#app");
+    </script>
+</body>
+</html>

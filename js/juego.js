@@ -127,14 +127,15 @@ app.component('juego',{
 
   template: /*html */` 
    <div class="cielo" :style="{backgroundColor:'skyblue'}">
+        
         <div class="espacio">
-
+          
           <div class="tipos">
             <button v-for="fruto in frutos" v-on:click="seleccionarFruto(fruto)">
               {{ fruto.tipo }}
             </button>
             <button v-on:click="regar()">Regar </button>
-           
+            <button onclick="window.location.href='tienda.html'">Tienda</button>
    
           </div>
         

@@ -58,7 +58,35 @@
   height: auto ;
 }
 
+.shopItem{
+  width: 13rem;
+  height: auto ;
+}
 
+.shop-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.shop-wrap {
+  display: flex;
+  justify-content: center; 
+  flex-wrap: wrap;         
+  gap: 1rem;
+
+}
+
+
+.text-overflow{
+  max-width: 80rem;
+  overflow-wrap: break-word;
+  white-space: normal;
+  padding: 1rem;
+
+}
+
+  
 }
 
 
