@@ -2,7 +2,8 @@
 
       :root {
     --color-white: hsl(0, 0%, 100%);
-    --color-brown: #8f1b02;
+    --color-brown: hsl(11, 97%, 28%);
+     --color-celeste: hsl(193, 66%, 64%);
 
     --ff-main: "Jersey 15", sans-serif;
 

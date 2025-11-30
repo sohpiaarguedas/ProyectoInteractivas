@@ -11,6 +11,10 @@
     background-color: var(--color-brown);
   }
 
+  .bg-celeste{
+    background-color: var(--color-celeste);
+  }
+
 
 
    .center{
@@ -23,9 +27,15 @@
 
   .row {
     display: flex;
+  
   }
 
  
+  .space-padding{
+    padding-top: 3rem;
+  }
+
+
   .space-margin {
     margin: 0.8rem;
   }
@@ -33,26 +43,31 @@
 
 
 .cielo {
-  display: inline-flex;
-  padding-top: 5rem;
+   width: 100%;
+  min-height: 100vh;   
+  display: flex;
+  flex-direction: column;
+  padding: 0;         
+  margin: 0;
 }
 
-.row {
-  display: flex;
-  margin: 0;
-  padding: 0;
-  gap: 0;
-}
+
 
 .espacio {
-  margin-top: 10rem;
+   padding-top: 25rem;
 }
 
-.sprites {
- 
-  width: 150px;
-  height: 100px;
+
+
+.cerca-barra {
+  width: 100%;
+  height: 100px; 
+  background-image: url(../../img/cerca.png);
+  background-size: contain;
 }
+
+
+
 .menu-logo{
   width: 30rem;
   height: auto ;

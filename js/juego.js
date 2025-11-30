@@ -125,20 +125,26 @@ app.component('juego',{
     
   },
 
-  template: /*html */` 
-   <div class="cielo" :style="{backgroundColor:'skyblue'}">
+  template: /*html */ ` 
+   <div class="cielo espacio bg-celeste">
         
-        <div class="espacio">
+        <div class=" space-padding">
+       
           
-          <div class="tipos">
-            <button v-for="fruto in frutos" v-on:click="seleccionarFruto(fruto)">
+          <div class="tipos space-padding row space-margin">
+            <button class="" v-for="fruto in frutos" v-on:click="seleccionarFruto(fruto)">
               {{ fruto.tipo }}
             </button>
-            <button v-on:click="regar()">Regar </button>
-            <button onclick="window.location.href='tienda.html'">Tienda</button>
+            <button class=""  v-on:click="regar()">Regar </button>
+            <button class="" onclick="window.location.href='tienda.html'">Tienda</button>
    
           </div>
-        
+      
+          <div class="cerca-barra"></div>
+
+          <div class="pasto">
+
+
           <div class="row" 
          v-for="(columnaSprite, indiceColumna) in sprites" :key="indiceColumna">
         <div class="cell" v-for="(celdaSprite, indiceCelda) in columnaSprite.espacio" :key="indiceCelda">
@@ -148,6 +154,7 @@ app.component('juego',{
 </div>
 
         </div>
+         </div>
       </div>
 
 `
