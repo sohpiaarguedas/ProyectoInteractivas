@@ -34,7 +34,7 @@ const app = Vue.createApp({
           semillaMojada: "./img/semillaMojada.png",
           creciendo: "./img/tomateCrecimiento",
           cosecha: "tomate",
-          precio: 100
+          precio: 100,
         },
         {
           tipo: "pepino",
@@ -43,7 +43,7 @@ const app = Vue.createApp({
           semillaMojada: "./img/semillaMojada.png",
           creciendo: "./img/pepinoCrecimiento",
           cosecha: "pepino",
-          precio: 200
+          precio: 200,
         },
 
         {
@@ -52,8 +52,8 @@ const app = Vue.createApp({
           semilla: "./img/semillaPlantada.png",
           semillaMojada: "./img/semillaMojada.png",
           creciendo: "./img/zanahoriaCrecimiento.png",
-          cosecha: "zanahoria",
-          precio: 300
+          cosecha: "./img/zanahoriaCosehca.png",
+          precio: 300,
         },
       ],
     };
@@ -75,7 +75,7 @@ const app = Vue.createApp({
         this.actualizar({
           columna: indexColumn,
           fila: indexCell,
-          propiedad: this.tierra
+          propiedad: this.tierra,
         });
       }
     },
@@ -85,42 +85,39 @@ const app = Vue.createApp({
 
       if (parcela.image == this.tierra && this.seleccionado) {
         parcela.image = this.seleccionado.semilla;
+        parcela.tipo = this.seleccionado.tipo;
         this.actualizar({
           columna: indexColumn,
           fila: indexCell,
           propiedad: this.seleccionado.semilla,
-          semilla: this.seleccionado.tipo
+          semilla: this.seleccionado.tipo,
+          estado: "sembrado"
         });
       }
     },
 
     regar() {
-  console.log("regando");
+      console.log("regando");
 
-  if (!this.seleccionado) {
-    return;
-  }
-
-  for (let i = 0; i < this.sprites.length; i++) {
-    let columna = this.sprites[i];
-    for (let j = 0; j < columna.espacio.length; j++) {
-      let parcela = columna.espacio[j];
-
-      if (parcela.image == this.seleccionado.semilla) {
-        parcela.image = this.seleccionado.semillaMojada;
-        this.actualizar({
-          columna: i,
-          fila: j,
-          propiedad: this.seleccionado.semillaMojada,
-          semilla: this.seleccionado.tipo
-        });
+      if (!this.seleccionado) {
+        return;
       }
-    }
-  }
 
-  this.seleccionado = null;
-},
+      for (let i = 0; i < this.sprites.length; i++) {
+        let columna = this.sprites[i];
+        for (let j = 0; j < columna.espacio.length; j++) {
+          let parcela = columna.espacio[j];
 
+          if (parcela.image == this.seleccionado.semilla) {
+            parcela.image = this.seleccionado.semillaMojada;
+            parcela.estado = "creciendo";
+            this.cosechar(i, j);
+          }
+        }
+      }
+
+      this.seleccionado = null;
+    },
     seleccionarFruto(fruto) {
       this.seleccionado = fruto;
     },
@@ -129,42 +126,83 @@ const app = Vue.createApp({
       if (this.accion == "regar") {
         console.log("Entra a acciones");
         this.regar(indexColumn, indexCell);
-      } if (this.seleccionado) {
+      }
+      if (this.seleccionado) {
         this.sembrar(indexColumn, indexCell);
       } else {
         this.arar(indexColumn, indexCell);
       }
     },
 
-    comprar(fruto){
-        if(this.dinero < fruto.precio){
-            alert("No tienes suficiente dinero para comprar este producto");
-        }else{
-            this.compra= fruto;
-            this.dinero= this.dinero - this.compra.precio;
-            
-        }
-        
+    comprar(fruto) {
+      if (this.dinero < fruto.precio) {
+        alert("No tienes suficiente dinero para comprar este producto");
+      } else {
+        this.compra = fruto;
+        this.dinero = this.dinero - this.compra.precio;
+      }
     },
+
+    cosechar(indexColumn, indexCell) {
+      let parcela = this.sprites[indexColumn].espacio[indexCell];
+
+      let fruto = null;
+
+      for (let i = 0; i < this.frutos.length; i++) {
+        if (this.frutos[i].tipo === parcela.tipo) {
+          fruto = this.frutos[i];
+        }
+      }
+
+      setTimeout(() => {
+        this.sprites[indexColumn].espacio[indexCell].image =fruto.creciendo;
+        this.sprites[indexColumn].espacio[indexCell].estado = "creciendo";  
+        parcela.image = fruto.creciendo;
+        parcela.estado = "creciendo";
+
+        this.actualizar({
+          columna: indexColumn,
+          fila: indexCell,
+          propiedad: fruto.creciendo,
+          semilla: parcela.tipo,
+          estado: parcela.estado,
+        });
+      }, 10000);
+
+      setTimeout(() => {
+        this.sprites[indexColumn].espacio[indexCell].image = fruto.cosecha;
+        this.sprites[indexColumn].espacio[indexCell].estado = "cosechado";  
+        parcela.image = fruto.cosecha;
+        parcela.estado = "cosechado";
+
+        this.guardarCosecha({
+          columna: indexColumn,
+          fila: indexCell,
+          propiedad: fruto.cosecha,
+          estado: parcela.estado,
+        });
+      }, 20000);
+    },
+
     async actualizar(datos) {
       try {
-        const respuesta = await fetch("http://127.0.0.1:8000/api/parcela/update", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            indicecolumna: datos.columna,
-            indicefila: datos.fila,
-            propiedades: datos.propiedad,
-            semilla: datos.semilla
-
-          })
-        })
-      }
-      catch (error) {
-
-      };
+        const respuesta = await fetch(
+          "http://127.0.0.1:8000/api/parcela/update",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              indicecolumna: datos.columna,
+              indicefila: datos.fila,
+              propiedades: datos.propiedad,
+              semilla: datos.semilla,
+              estado: datos.estado,
+            }),
+          }
+        );
+      } catch (error) {}
     },
     async guardando() {
       const mapaCompleto = [];
@@ -176,6 +214,7 @@ const app = Vue.createApp({
             indicefila: j,
             propiedades: columna.espacio[j].image,
             semilla: null,
+            estado: null,
           });
         }
       }
@@ -216,6 +255,7 @@ const app = Vue.createApp({
           const rowIndex = parcela.indicefila;
           floor[colIndex].espacio[rowIndex].image = parcela.propiedades;
           floor[colIndex].espacio[rowIndex].tipo = parcela.semilla;
+          floor[colIndex].espacio[rowIndex].estado = parcela.estado;
           console.log(
             "Imagen actualizada:",
             floor[colIndex].espacio[rowIndex].image
@@ -230,37 +270,58 @@ const app = Vue.createApp({
     },
     async cargarDatos() {
       try {
-        const respuesta = await fetch("http://127.0.0.1:8000/api/parcela/index", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json"
-          },
-        });
-
+        const respuesta = await fetch(
+          "http://127.0.0.1:8000/api/parcela/index",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (!respuesta.ok) {
-          throw new Error(`Error al guardar los datos: ${respuesta.status}`)
+          throw new Error(`Error al guardar los datos: ${respuesta.status}`);
         }
         const data = await respuesta.json();
-        const parcelas = data.data
+        const parcelas = data.data;
         console.log("Respuesta: ", data);
-
 
         if (parcelas.length === 0) {
           this.generarTerreno(null);
           this.guardando();
           console.log("Estado: Mapa inicializado y guardado en la BD.");
         } else {
-
           this.generarTerreno(parcelas);
           console.log("Estado: Mapa cargado desde la BD.");
         }
-      }
-
-      catch (error) {
+      } catch (error) {
         console.log("Respuesta: ", error);
       }
-    }
+    },
+
+     async guardarCosecha(datos) {
+      try {
+        await fetch("http://127.0.0.1:8000/api/parcela/cosechar", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            indicecolumna: datos.columna,
+            indicefila: datos.fila,
+            propiedades: datos.propiedad,
+            
+          }),
+        });
+
+        console.log("Cosecha guardada");
+      } catch (error) {
+        console.log("Error guardando cosecha:", error);
+      }
+    },
+
+
   },
   mounted() {
     this.cargarDatos();
