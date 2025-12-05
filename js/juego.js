@@ -1,38 +1,28 @@
 /**
-*@component
-*@example
-*
-*
-*<juego 
-*
-* :pasto: "./img/pasto.png",
-*      :tierra: "./img/tierra.png",
- *     :columns: 10,
-*    :cells: 10,
-*     :seleccionado: null,
-*     :sprites: [],
-*     :frutos: [
-*        {
-*          tipo: "tomate",
-*          semilla: "./img/semillaPlantada.png",
-*          creciendo: "./img/tomateCrecimiento",
-*          cosecha: "tomate",
-*        },
-*        {
-*          tipo: "pepino",
-*          semilla: "./img/semillaPlantada.png",
-*          creciendo: "./img/pepinoCrecimiento",
-*          cosecha: "pepino",
-*        },
-*      ]
->
+ * @fileoverview This file contains the Vue.js component for the game board.
+ * @module juego
+ */
 
-</juego>
-
-*/
-
-
-
+/**
+ * @class juego
+ * @description This component represents the main game board where players can interact with crops.
+ * It allows players to plow land, plant seeds, water crops, and trigger various actions.
+ *
+ * @property {string} pasto - The image URL for the grass sprite.
+ * @property {string} tierra - The image URL for the tilled land sprite.
+ * @property {number} columns - The number of columns in the game board grid.
+ * @property {number} cells - The number of cells per column in the game board grid.
+ * @property {Object|null} seleccionado - The currently selected fruit/crop for planting.
+ * @property {Array<Object>} frutos - An array of available fruits/crops with their types, seed images, growth images, and harvest names.
+ * @property {Array<Array<Object>>} sprites - A 2D array representing the game board, where each object contains sprite information for a cell.
+ *
+ * @fires juego#arar - Emits an 'arar' event when a cell is plowed.
+ * @fires juego#sembrar - Emits a 'sembrar' event when a seed is planted on a cell.
+ * @fires juego#regar - Emits a 'regar' event when crops are watered.
+ * @fires juego#seleccionar-fruto - Emits a 'seleccionar-fruto' event when a fruit is selected for planting.
+ * @fires juego#acciones - Emits an 'acciones' event when an action is performed on a cell.
+ *
+ */
 app.component('juego',{
 
      /**

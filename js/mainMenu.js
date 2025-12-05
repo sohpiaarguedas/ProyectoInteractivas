@@ -1,9 +1,20 @@
+/**
+ * @fileoverview This file contains the Vue.js component for the main menu.
+ * @module mainMenu
+ */
+
+/**
+ * @class mainMenu
+ * @description This component serves as the main menu of the application, providing navigation to different sections.
+ * Currently, its template appears to contain a "Sign up" form, which might be a placeholder or an error in content.
+ *
+ * @property {Object} users - An object containing user data, possibly for display or interaction within the menu.
+ * @property {string} users.email - The user's email.
+ * @property {string} users.birthdate - The user's birthdate.
+ * @property {string} users.username - The user's username.
+ * @property {string} users.password - The user's password.
+ */
 app.component('mainMenu',{
-    /** 
-    * Component props - Data received from parent component
-    * @typedef {Object} signUp
-    * @property {users} users - Users Object 
-    */
     props:{
         users:{
             type:Object,
@@ -11,9 +22,19 @@ app.component('mainMenu',{
         }
 
     },
+    /**
+     * @memberof mainMenu
+     * @description Computed properties for the mainMenu component.
+     * @namespace mainMenuComputed
+     */
     computed:{
 
     },
+    /**
+     * @memberof mainMenu
+     * @description Methods for the mainMenu component.
+     * @namespace mainMenuMethods
+     */
     methods:{
 
     },

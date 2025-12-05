@@ -1,0 +1,24 @@
+En caso de alguna nota para considerar la instalación o ejecución del proyecto, así como alguna instrucción en particular a seguir, por favor agregar un archivo de texto con esta información.
+Incluya un documento (puede ser un archivo de texto simple) en donde enumera las funcionalidades que no fueron implementadas y que eran requeridas por la definición del proyecto, así como los casos de alguna funcionalidad incompleta o con errores.
+Para los casos de proyectos desarrollados en grupo, únicamente una persona debe de realizar la entrega (agregar un archivo de texto con la información de las personas que integran el grupo)
+
+Para que el proyecto funcione se tiene que iniciar un servidor web con el comando: "php artisan serve" en el puerto 8000
+
+Participantes:
+Ricardo Perez
+Sohpia Arguedas
+
+Intrucciones y funciones particulares:
+-Se puede arar libremente, una vez seleccionada una semilla, no se puede volver a arar hasta regar, pero si se puede sembrar y cambiar de semillas.
+-El fruto se autocosecha al estar en su etapa final, pero se queda en imagen visualmente.
+
+
+
+Funciones requeridas no logradas:
+1-Cierre de sesion
+2-Abonar
+3-Monedas virtuales
+4-Panel de usuario.
+
+
+Repositorio github: https://github.com/sohpiaarguedas/ProyectoInteractivas

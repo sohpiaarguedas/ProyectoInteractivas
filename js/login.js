@@ -1,11 +1,25 @@
+/**
+ * @fileoverview This file contains the Vue.js component for user login.
+ * @module login
+ */
+
+/**
+ * @class login
+ * @description This component handles user authentication, allowing users to log in to the application.
+ * It manages login data, communicates with the backend API, and handles successful login responses,
+ * including token and user data storage, and redirection to the main menu.
+ *
+ * @property {Object} loginData - Reactive data object containing user login credentials.
+ * @property {string} loginData.username - The username entered by the user.
+ * @property {string} loginData.password - The password entered by the user.
+ *
+ * @method tryLogin - Attempts to log in the user by sending credentials to the API.
+ * @async
+ * @returns {void}
+ * @throws {Error} If the login attempt fails due to network issues or incorrect credentials.
+ */
 app.component('login', {
-    /** 
-    * Component props - Data received from parent component
-    * @typedef {Object} signUp
-    * @property {users} users - Users Object 
-    */
-    props: {
-    },
+    props: {},
     data() {
         return {
             loginData: {
@@ -18,32 +32,38 @@ app.component('login', {
 
     },
     methods: {
-        async tryLogin() {
-            try {
+    async tryLogin() {
+        try {
+            const apiUrl = 'http://localhost:8000/api/login';
+            
+            const config = {
+                headers: {
+                    'Accept': 'application/json', 
+                    'Content-Type': 'application/json'
+                }
+            };
 
-                const apiUrl = 'http://localhost:8000/api/login';
-                const response = await axios.post(apiUrl, this.loginData);
+            const response = await axios.post(apiUrl, this.loginData, config);
 
+            console.log('¡Login exitoso!', response.data);
 
-                
-                console.log('¡Login exitoso!', response.data);
+            localStorage.setItem('token', response.data.access_token || response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
 
+            alert('¡Bienvenido! Redirigiendo al menú principal...');
+            window.location.href = 'mainMenu.html';
 
-                localStorage.setItem('token', response.data.access_token);
-
-                localStorage.setItem('user', JSON.stringify(response.data.user));
-
-
-                alert('¡Bienvenido! Redirigiendo al menú principal...');
-                window.location.href = 'mainMenu.html'; 
-
-            } catch (error) {
-
-                console.error('Error en el login:', error.response.data);
-                alert('Error: ' + error.response.data.message);
+        } catch (error) {
+            console.error('Error en el login:', error);
+            
+            if (error.response && error.response.data) {
+                alert('Error: ' + (error.response.data.message || 'Credenciales incorrectas'));
+            } else {
+                alert('Error de conexión con el servidor');
             }
         }
-    },
+    }
+},
     template: /*html*/ `
      
 
