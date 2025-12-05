@@ -1,7 +1,15 @@
 /**
- * Instructions component.
- * @namespace InstructionsComponent
- * @property {string} template - The HTML template for the component.
+ * @fileoverview This file contains the Vue.js component for the instructions page.
+ * @module instrucciones
+ */
+
+/**
+ * @class instrucciones
+ * @description This component displays the instructions on how to play the game. 
+ * It provides a detailed guide on planting, watering, harvesting, and selling crops, 
+ * as well as completing missions for rewards.
+ *
+ * @property {string} template - The HTML template for the instructions component.
  */
 app.component('instrucciones',{
     template:  /*html */`

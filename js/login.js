@@ -1,20 +1,25 @@
 /**
- * Login component.
- * @namespace LoginComponent
+ * @fileoverview This file contains the Vue.js component for user login.
+ * @module login
+ */
+
+/**
+ * @class login
+ * @description This component handles user authentication, allowing users to log in to the application.
+ * It manages login data, communicates with the backend API, and handles successful login responses,
+ * including token and user data storage, and redirection to the main menu.
+ *
+ * @property {Object} loginData - Reactive data object containing user login credentials.
+ * @property {string} loginData.username - The username entered by the user.
+ * @property {string} loginData.password - The password entered by the user.
+ *
+ * @method tryLogin - Attempts to log in the user by sending credentials to the API.
+ * @async
+ * @returns {void}
+ * @throws {Error} If the login attempt fails due to network issues or incorrect credentials.
  */
 app.component('login', {
-    /** 
-    * Component props - Data received from parent component
-    * @memberof LoginComponent
-    * @property {Object} users - Users Object 
-    */
-    props: {
-    },
-    /**
-     * Component data.
-     * @memberof LoginComponent
-     * @returns {Object} The component's data.
-     */
+    props: {},
     data() {
         return {
             loginData: {
@@ -26,47 +31,39 @@ app.component('login', {
     computed: {
 
     },
-    /**
-     * Component methods.
-     * @memberof LoginComponent
-     */
     methods: {
-        /**
-         * @memberof LoginComponent
-         * @method tryLogin
-         * @description Handles the user login process. This asynchronous method sends the user's credentials to the backend API. Upon successful authentication, it stores the access token and user data in local storage, then redirects the user to the main menu. If authentication fails, it logs the error and displays an alert to the user.
-         */
-        async tryLogin() {
-            try {
+    async tryLogin() {
+        try {
+            const apiUrl = 'http://localhost:8000/api/login';
+            
+            const config = {
+                headers: {
+                    'Accept': 'application/json', 
+                    'Content-Type': 'application/json'
+                }
+            };
 
-                const apiUrl = 'http://localhost:8000/api/login';
-                const response = await axios.post(apiUrl, this.loginData);
+            const response = await axios.post(apiUrl, this.loginData, config);
 
+            console.log('¡Login exitoso!', response.data);
 
-                
-                console.log('¡Login exitoso!', response.data);
+            localStorage.setItem('token', response.data.access_token || response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
 
+            alert('¡Bienvenido! Redirigiendo al menú principal...');
+            window.location.href = 'mainMenu.html';
 
-                localStorage.setItem('token', response.data.access_token);
-
-                localStorage.setItem('user', JSON.stringify(response.data.user));
-
-
-                alert('¡Bienvenido! Redirigiendo al menú principal...');
-                window.location.href = 'mainMenu.html'; 
-
-            } catch (error) {
-
-                console.error('Error en el login:', error.response.data);
-                alert('Error: ' + error.response.data.message);
+        } catch (error) {
+            console.error('Error en el login:', error);
+            
+            if (error.response && error.response.data) {
+                alert('Error: ' + (error.response.data.message || 'Credenciales incorrectas'));
+            } else {
+                alert('Error de conexión con el servidor');
             }
         }
-    },
-    /**
-     * The HTML template for the component.
-     * @memberof LoginComponent
-     * @type {string}
-     */
+    }
+},
     template: /*html*/ `
      
 

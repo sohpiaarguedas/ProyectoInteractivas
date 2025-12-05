@@ -1,74 +1,65 @@
 /**
- * Vue application instance.
+ * @fileoverview This file initializes the main Vue.js application.
+ * @module main
+ */
+
+/**
  * @namespace MainApp
+ * @description The main Vue.js application instance for the game.
+ * It manages global state, user data, game board, and interactions with the backend API.
  */
 const app = Vue.createApp({
   /**
-   * Reactive data properties for the main application.
+   * Reactive data properties
    * @memberof MainApp
-   * @returns {Object} The data object for the Vue instance.
+   * @returns {Object} AppData - The reactive data object for the application.
+   * @property {string|null} token - The authentication token stored in local storage.
+   * @property {Object|null} user - The user object parsed from local storage.
+   * @property {Array<Object>} usersStorage - An array to store multiple user objects (currently unused).
+   * @property {Object} users - An object containing user registration data.
+   * @property {string} users.email - The user's email for registration.
+   * @property {string} users.birthdate - The user's birthdate for registration.
+   * @property {string} users.username - The user's username for registration and login.
+   * @property {string} users.password - The user's password for registration and login.
+   * @property {string} pasto - The image path for grass terrain.
+   * @property {string} tierra - The image path for tilled land.
+   * @property {number} columns - The number of columns on the game board.
+   * @property {number} cells - The number of cells per column on the game board.
+   * @property {Object|null} seleccionado - The currently selected fruit/seed to plant.
+   * @property {Array<Object>} sprites - The 2D array representing the game board's visual state.
+   * @property {number} dinero - The player's current money.
+   * @property {Object|null} compra - The currently selected item for purchase.
+   * @property {Array<Object>} frutos - An array of available fruits/crops with their properties.
+   * @property {string} frutos[].tipo - The type of the fruit (e.g., "tomate", "remolacha").
+   * @property {string} frutos[].semillaPaquete - Image path for the seed package.
+   * @property {string} frutos[].semilla - Image path for the planted seed.
+   * @property {string} frutos[].semillaMojada - Image path for the watered seed.
+   * @property {string} frutos[].creciendo - Image path for the growing crop.
+   * @property {string} frutos[].cosecha - Image path for the harvested crop.
+   * @property {number} frutos[].precio - The price of the fruit/seed.
+   *
    */
   data() {
     return {
-      /**
-       * User storage array.
-       * @type {Array<Object>}
-       */
+      token: localStorage.getItem("token"),
+      user: JSON.parse(localStorage.getItem("user")),
       usersStorage: [],
-      /**
-       * User object with email, birthdate, username, and password.
-       * @type {Object}
-       */
+      /** @type {Object} users object */
       users: {
         email: "",
         birthdate: "",
         username: "",
         password: "",
       },
-      /**
-       * Path to the grass image.
-       * @type {string}
-       */
+
       pasto: "./img/pasto.png",
-      /**
-       * Path to the soil image.
-       * @type {string}
-       */
       tierra: "./img/tierra.png",
-      /**
-       * Number of columns in the grid.
-       * @type {number}
-       */
       columns: 5,
-      /**
-       * Number of cells in each column.
-       * @type {number}
-       */
       cells: 10,
-      /**
-       * The currently selected item.
-       * @type {Object|null}
-       */
       seleccionado: null,
-      /**
-       * The grid of sprites representing the farm.
-       * @type {Array<Object>}
-       */
       sprites: [],
-      /**
-       * The player's current money.
-       * @type {number}
-       */
       dinero: 1000,
-      /**
-       * The item being purchased.
-       * @type {Object|null}
-       */
       compra: null,
-      /**
-       * Array of available fruits with their properties.
-       * @type {Array<Object>}
-       */
       frutos: [
         {
           tipo: "tomate",
@@ -102,28 +93,30 @@ const app = Vue.createApp({
     };
   },
 
-  computed: {},
-  /**
-   * Methods for the main application.
-   * @memberof MainApp
-   */
+  computed: {
+    /**
+     * @memberof MainApp
+     * @description Computed properties for the main application instance.
+     * @namespace MainAppComputed
+     */
+  },
   methods: {
     /**
      * @memberof MainApp
-     * @method addUser
-     * @description Placeholder for the user registration functionality. This method is intended to handle the logic for adding a new user to the system. It is connected to the frontend through Vue's v-model directive but currently lacks an implementation.
+     * @description Adds a new user. This function is currently a placeholder and does not perform any action.
+     * @returns {void}
      */
-    addUser() {},
+    addUser() { },
     /**
      * @memberof MainApp
-     * @method login
-     * @description Placeholder for the user login functionality. This method is designed to verify user credentials against stored data. It is intended to be used from the login HTML page but is not yet implemented.
+     * @description Handles user login. This function is currently a placeholder and does not perform any action.
+     * @returns {void}
      */
-    login() {},
+    login() { },
     /**
      * @memberof MainApp
-     * @method gotogame
-     * @description Navigates the user to the main game page. This method changes the window's location to 'juego.html', effectively redirecting the user to the game interface.
+     * @description Redirects the user to the game page.
+     * @returns {void}
      */
     gotogame() {
       window.location.href = "juego.html";
@@ -131,10 +124,10 @@ const app = Vue.createApp({
 
     /**
      * @memberof MainApp
-     * @method arar
-     * @description Tills a selected plot of land. This method checks if the selected cell is grass and changes it to tillable soil. The state change is then persisted by calling the `actualizar` method.
-     * @param {number} indexColumn - The column index of the grid cell.
-     * @param {number} indexCell - The row index of the grid cell.
+     * @description Plows a specified cell on the game board, changing its image from grass to tilled land.
+     * @param {number} indexColumn - The index of the column where the cell is located.
+     * @param {number} indexCell - The index of the cell within the specified column.
+     * @returns {void}
      */
     arar(indexColumn, indexCell) {
       if (this.sprites[indexColumn].espacio[indexCell].image == this.pasto) {
@@ -149,10 +142,10 @@ const app = Vue.createApp({
 
     /**
      * @memberof MainApp
-     * @method sembrar
-     * @description Plants a selected seed in a tilled plot of land. This method verifies that the cell is tilled soil and that a seed has been selected. It then updates the cell's image to represent the planted seed and persists this change through the `actualizar` and `sembrarSemillaFetch` methods.
-     * @param {number} indexColumn - The column index of the grid cell.
-     * @param {number} indexCell - The row index of the grid cell.
+     * @description Plants a selected seed on a specified tilled land cell.
+     * @param {number} indexColumn - The index of the column where the seed is to be planted.
+     * @param {number} indexCell - The index of the cell within the specified column where the seed is to be planted.
+     * @returns {void}
      */
     sembrar(indexColumn, indexCell) {
       let parcela = this.sprites[indexColumn].espacio[indexCell];
@@ -167,14 +160,15 @@ const app = Vue.createApp({
           semilla: this.seleccionado.tipo,
           estado: "sembrado"
         });
-       this.sembrarSemillaFetch(indexColumn, indexCell, this.seleccionado.tipo);
+        this.sembrarSemillaFetch(indexColumn, indexCell, this.seleccionado.tipo);
       }
     },
 
     /**
      * @memberof MainApp
-     * @method regar
-     * @description Waters all planted seeds on the farm. This method iterates through all the cells of the grid, and for each cell that contains a planted seed, it changes its state to 'growing' and updates its image to a watered seed. It then schedules the harvest by calling the `cosechar` method. Finally, it resets the player's selection.
+     * @description Waters all planted seeds on the game board that match the currently selected fruit.
+     * Changes the image of watered seeds and initiates the harvesting process.
+     * @returns {void}
      */
     regar() {
       console.log("regando");
@@ -200,9 +194,9 @@ const app = Vue.createApp({
     },
     /**
      * @memberof MainApp
-     * @method seleccionarFruto
-     * @description Sets the currently selected fruit for planting. This method updates the `seleccionado` data property with the fruit object chosen by the user from the interface.
-     * @param {Object} fruto - The fruit object to be selected.
+     * @description Sets the currently selected fruit/seed to be planted.
+     * @param {Object} fruto - The fruit object that is selected.
+     * @returns {void}
      */
     seleccionarFruto(fruto) {
       this.seleccionado = fruto;
@@ -210,10 +204,12 @@ const app = Vue.createApp({
 
     /**
      * @memberof MainApp
-     * @method acciones
-     * @description Determines and executes the primary action on a grid cell based on the current game state. If the 'regar' action is active, it waters the plot. If a seed is selected, it plants it. Otherwise, it tills the land.
-     * @param {number} indexColumn - The column index of the grid cell.
-     * @param {number} indexCell - The row index of the grid cell.
+     * @description Handles various actions on a specific game board cell based on current selection or action state.
+     * If 'regar' action is active, it waters the cell. If a fruit is selected, it attempts to plant it.
+     * Otherwise, it plows the cell.
+     * @param {number} indexColumn - The index of the column of the cell.
+     * @param {number} indexCell - The index of the cell within the column.
+     * @returns {void}
      */
     acciones(indexColumn, indexCell) {
       if (this.accion == "regar") {
@@ -229,9 +225,10 @@ const app = Vue.createApp({
 
     /**
      * @memberof MainApp
-     * @method comprar
-     * @description Handles the purchase of a fruit's seeds. This method checks if the player has enough money, and if so, deducts the price from their total and initiates the purchase process on the backend via `comprarSemillaFetch`.
-     * @param {Object} fruto - The fruit object whose seeds are to be purchased.
+     * @description Handles the purchase of a fruit/seed. Checks if the player has enough money,
+     * updates the player's balance, sets the purchased item, and calls the backend API to record the purchase.
+     * @param {Object} fruto - The fruit object to be purchased.
+     * @returns {void}
      */
     comprar(fruto) {
       if (this.dinero < fruto.precio) {
@@ -246,10 +243,12 @@ const app = Vue.createApp({
 
     /**
      * @memberof MainApp
-     * @method cosechar
-     * @description Manages the growth and harvesting process for a plant. This method schedules two timed events: the first to transition the plant to a 'growing' state, and the second to transition it to a 'harvested' state. Each state change is persisted to the backend.
-     * @param {number} indexColumn - The column index of the grid cell.
-     * @param {number} indexCell - The row index of the grid cell.
+     * @description Simulates the growth and harvesting of a crop on a specific cell.
+     * Updates the sprite image to reflect "growing" and then "harvested" states after set delays,
+     * and calls `guardarCosecha` to persist the harvest status.
+     * @param {number} indexColumn - The index of the column where the crop is located.
+     * @param {number} indexCell - The index of the cell within the specified column.
+     * @returns {void}
      */
     cosechar(indexColumn, indexCell) {
       let parcela = this.sprites[indexColumn].espacio[indexCell];
@@ -263,8 +262,8 @@ const app = Vue.createApp({
       }
 
       setTimeout(() => {
-        this.sprites[indexColumn].espacio[indexCell].image =fruto.creciendo;
-        this.sprites[indexColumn].espacio[indexCell].estado = "creciendo";  
+        this.sprites[indexColumn].espacio[indexCell].image = fruto.creciendo;
+        this.sprites[indexColumn].espacio[indexCell].estado = "creciendo";
         parcela.image = fruto.creciendo;
         parcela.estado = "creciendo";
 
@@ -279,7 +278,7 @@ const app = Vue.createApp({
 
       setTimeout(() => {
         this.sprites[indexColumn].espacio[indexCell].image = fruto.cosecha;
-        this.sprites[indexColumn].espacio[indexCell].estado = "cosechado";  
+        this.sprites[indexColumn].espacio[indexCell].estado = "cosechado";
         parcela.image = fruto.cosecha;
         parcela.estado = "cosechado";
 
@@ -288,20 +287,22 @@ const app = Vue.createApp({
           fila: indexCell,
           propiedad: fruto.cosecha,
           estado: parcela.estado,
+          semilla: parcela.tipo,
         });
       }, 20000);
     },
 
     /**
      * @memberof MainApp
-     * @method actualizar
-     * @description Sends an update to the server to persist changes to a plot of land. This asynchronous method makes a POST request to the backend API with the new properties of the cell.
-     * @param {Object} datos - An object containing the cell's updated data.
-     * @param {number} datos.columna - The column index of the cell.
-     * @param {number} datos.fila - The row index of the cell.
-     * @param {string} datos.propiedad - The new value for the 'image' property of the cell.
-     * @param {string} datos.semilla - The type of seed planted.
-     * @param {string} datos.estado - The current state of the plot.
+     * @description Asynchronously updates the properties of a parcel on the backend.
+     * @async
+     * @param {Object} datos - An object containing the data to update the parcel.
+     * @param {number} datos.columna - The column index of the parcel.
+     * @param {number} datos.fila - The row index of the parcel.
+     * @param {string} datos.propiedad - The new property (e.g., image path) of the parcel.
+     * @param {string} datos.semilla - The type of seed planted in the parcel.
+     * @param {string} datos.estado - The current state of the parcel (e.g., "sembrado", "creciendo").
+     * @returns {Promise<void>}
      */
     async actualizar(datos) {
       try {
@@ -310,7 +311,7 @@ const app = Vue.createApp({
           {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "application/json","Accept": "application/json", "Authorization": `Bearer ${this.token}`
             },
             body: JSON.stringify({
               indicecolumna: datos.columna,
@@ -321,12 +322,15 @@ const app = Vue.createApp({
             }),
           }
         );
-      } catch (error) {}
+      } catch (error) { }
     },
     /**
      * @memberof MainApp
-     * @method guardando
-     * @description Saves the initial state of the entire game map to the server. This method is typically called only once when the game is first initialized. It sends the complete grid layout to the backend to be stored.
+     * @description Asynchronously saves the complete state of the game board to the backend.
+     * This is typically used for initial setup or mass saving of parcel data.
+     * @async
+     * @returns {Promise<void>}
+     * @throws {Error} If there is an error during the saving process.
      */
     async guardando() {
       const mapaCompleto = [];
@@ -349,7 +353,7 @@ const app = Vue.createApp({
           {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "application/json","Accept": "application/json", "Authorization": `Bearer ${this.token}`
             },
             body: JSON.stringify(mapaCompleto),
           }
@@ -365,10 +369,10 @@ const app = Vue.createApp({
     },
     /**
      * @memberof MainApp
-     * @method generarTerreno
-     * @description Creates the initial game grid or populates it with data from the server. If no data is provided, it generates a new grid of default grass plots. If data is provided, it populates the grid with the states of each plot as received from the backend.
-     * @param {Array<Object>|null} data - An array of plot data objects from the server, or null to generate a new map.
-     * @returns {Array<Object>} The initialized or updated grid of sprites.
+     * @description Generates the initial game board terrain, filling it with grass sprites.
+     * If `data` is provided, it updates the terrain with existing parcel information from the database.
+     * @param {Array<Object>|null} data - An optional array of parcel data to pre-populate the terrain.
+     * @returns {Array<Array<Object>>} The generated 2D array representing the game board sprites.
      */
     generarTerreno(data) {
       let floor = [];
@@ -384,13 +388,16 @@ const app = Vue.createApp({
         data.forEach((parcela) => {
           const colIndex = parcela.indicecolumna;
           const rowIndex = parcela.indicefila;
-          floor[colIndex].espacio[rowIndex].image = parcela.propiedades;
-          floor[colIndex].espacio[rowIndex].tipo = parcela.semilla;
-          floor[colIndex].espacio[rowIndex].estado = parcela.estado;
-          console.log(
-            "Imagen actualizada:",
-            floor[colIndex].espacio[rowIndex].image
-          );
+          if (floor[colIndex] && floor[colIndex].espacio && floor[colIndex].espacio[rowIndex]) {
+
+
+            floor[colIndex].espacio[rowIndex].image = parcela.propiedades;
+            floor[colIndex].espacio[rowIndex].tipo = parcela.semilla;
+            floor[colIndex].espacio[rowIndex].estado = parcela.estado;
+          } else {
+
+            console.log("Parcela ignorada por coordenadas inválidas:", parcela);
+          }
         });
       }
       this.sprites = floor;
@@ -401,8 +408,12 @@ const app = Vue.createApp({
     },
     /**
      * @memberof MainApp
-     * @method cargarDatos
-     * @description Loads the initial game data from the server. This method fetches the state of all farm plots. If no data is returned (i.e., it's a new game), it initializes a new map and saves it to the server. Otherwise, it populates the game grid with the fetched data.
+     * @description Asynchronously loads game board data from the backend API.
+     * If no data is found, it initializes a new terrain and saves it to the database.
+     * Otherwise, it populates the terrain with the fetched data.
+     * @async
+     * @returns {Promise<void>}
+     * @throws {Error} If there is an error during data fetching.
      */
     async cargarDatos() {
       try {
@@ -411,7 +422,7 @@ const app = Vue.createApp({
           {
             method: "GET",
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "application/json","Accept": "application/json", "Authorization": `Bearer ${this.token}`
             },
           }
         );
@@ -420,7 +431,7 @@ const app = Vue.createApp({
           throw new Error(`Error al guardar los datos: ${respuesta.status}`);
         }
         const data = await respuesta.json();
-        const parcelas = data.data;
+        const parcelas = data.data || [];
         console.log("Respuesta: ", data);
 
         if (parcelas.length === 0) {
@@ -438,97 +449,110 @@ const app = Vue.createApp({
 
     /**
      * @memberof MainApp
-     * @method guardarCosecha
-     * @description Sends data to the server to record a harvested crop. This method makes a POST request to the backend API, providing the coordinates and updated properties of the harvested plot.
-     * @param {Object} datos - An object containing the harvest data.
-     * @param {number} datos.columna - The column index of the harvested plot.
-     * @param {number} datos.fila - The row index of the harvested plot.
-     * @param {string} datos.propiedad - The final state or image of the harvested plot.
+     * @description Asynchronously saves the harvested crop's status to the backend and updates inventory.
+     * @async
+     * @param {Object} datos - An object containing the harvested parcel's data.
+     * @param {number} datos.columna - The column index of the parcel.
+     * @param {number} datos.fila - The row index of the parcel.
+     * @param {string} datos.propiedad - The image path of the harvested crop.
+     * @param {string} datos.estado - The state of the parcel after harvest (i.e., "cosechado").
+     * @param {string} datos.semilla - The type of fruit that was harvested.
+     * @returns {Promise<void>}
+     * @throws {Error} If there is an error during the saving or inventory update process.
      */
-     async guardarCosecha(datos) {
+    async guardarCosecha(datos) {
       try {
-        await fetch("http://127.0.0.1:8000/api/parcela/cosechar", {
+        await fetch("http://localhost:8000/api/parcela/cosechar", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json","Accept": "application/json", "Authorization": `Bearer ${this.token}` },
           body: JSON.stringify({
             indicecolumna: datos.columna,
             indicefila: datos.fila,
             propiedades: datos.propiedad,
-            
+            estado: 'cosechado'
           }),
         });
+        const tipoFruto = datos.semilla;
 
-        console.log("Cosecha guardada");
+        if (tipoFruto) {
+          const respuestaInventario = await fetch("http://localhost:8000/api/inventario/cosechar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json","Accept": "application/json", "Authorization": `Bearer ${this.token}` },
+            body: JSON.stringify({
+              tipo: tipoFruto
+            })
+          });
+          console.log("¡Fruto guardado en inventario!");
+        }
+
       } catch (error) {
-        console.log("Error guardando cosecha:", error);
+        console.log("Error en el proceso de cosecha:", error);
       }
     },
 
     /**
      * @memberof MainApp
-     * @method comprarSemillaFetch
-     * @description Communicates with the server to process the purchase of a seed. It sends a POST request with the type of seed being bought and alerts the user upon a successful transaction.
+     * @description Asynchronously handles the purchase of a seed by interacting with the backend inventory API.
+     * Displays an alert upon successful purchase.
+     * @async
      * @param {string} tipo - The type of seed to be purchased.
+     * @returns {Promise<void>}
+     * @throws {Error} If there is an error during the seed purchase process.
      */
     async comprarSemillaFetch(tipo) {
-    try {
+      try {
         const respuesta = await fetch("http://localhost:8000/api/inventario/comprar", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-             tipo: tipo })
+          method: "POST",
+          headers: { "Content-Type": "application/json","Accept": "application/json", "Authorization": `Bearer ${this.token}` },
+          body: JSON.stringify({
+            tipo: tipo
+          })
         });
 
-        const data = await respuesta.json();
+
 
         alert("Compraste una semilla de: " + tipo);
-    } catch (error) {
+      } catch (error) {
         console.error("Error al comprar semilla:", error);
-    }
-},
+      }
+    },
 
-/**
- * @memberof MainApp
- * @method sembrarSemillaFetch
- * @description Sends a request to the server to record the action of planting a seed in a specific plot. It makes a POST request with the plot coordinates and the type of seed.
- * @param {number} indiceFila - The row index of the plot.
- * @param {number} indiceColumna - The column index of the plot.
- * @param {string} tipo - The type of seed being planted.
- */
-  async sembrarSemillaFetch(indiceFila, indiceColumna, tipo) {
-    try {
+    /**
+     * @memberof MainApp
+     * @description Asynchronously saves the information about a newly planted seed to the backend API.
+     * @async
+     * @param {number} indiceFila - The row index where the seed was planted.
+     * @param {number} indiceColumna - The column index where the seed was planted.
+     * @param {string} tipo - The type of seed that was planted.
+     * @returns {Promise<void>}
+     * @throws {Error} If there is an error during the seed planting process.
+     */
+    async sembrarSemillaFetch(indiceFila, indiceColumna, tipo) {
+      try {
         const respuesta = await fetch("http://localhost:8000/api/parcela/store", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                indicefila: indiceFila,
-                indicecolumna: indiceColumna,
-                tipo: tipo
-            })
+          method: "POST",
+          headers: { "Content-Type": "application/json","Accept": "application/json", "Authorization": `Bearer ${this.token}` },
+          body: JSON.stringify({
+            indicefila: indiceFila,
+            indicecolumna: indiceColumna,
+            tipo: tipo
+          })
         });
 
         const data = await respuesta.json();
         console.log("Respuesta sembrar:", data);
-
-        if (respuesta.ok) {
-            alert(`Sembraste una semilla de ${tipo}`);
-        } else {
-            alert("Error");
-        }
-
-    } catch (error) {
+      } catch (error) {
         console.error("Error al sembrar semilla:", error);
+      }
     }
-}
 
 
   },
   /**
    * @memberof MainApp
-   * @method mounted
-   * @description A Vue lifecycle hook that is called after the instance has been mounted. It triggers the initial data load for the game by calling the `cargarDatos` method.
+   * @description Lifecycle hook that is called after the instance has been mounted.
+   * It triggers the asynchronous loading of game data.
+   * @returns {void}
    */
   mounted() {
     this.cargarDatos();

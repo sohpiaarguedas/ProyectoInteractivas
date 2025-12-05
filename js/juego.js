@@ -1,142 +1,120 @@
 /**
- * Game component.
- * @namespace GameComponent
- * 
- * @example
- * <juego
- *   :pasto="'./img/pasto.png'"
- *   :tierra="'./img/tierra.png'"
- *   :columns="10"
- *   :cells="10"
- *   :seleccionado="null"
- *   :sprites="[]"
- *   :frutos="[
- *     {
- *       tipo: 'tomate',
- *       semilla: './img/semillaPlantada.png',
- *       creciendo: './img/tomateCrecimiento',
- *       cosecha: 'tomate',
- *     },
- *     {
- *       tipo: 'pepino',
- *       semilla: './img/semillaPlantada.png',
- *       creciendo: './img/pepinoCrecimiento',
- *       cosecha: 'pepino',
- *     },
- *   ]"
- * ></juego>
+ * @fileoverview This file contains the Vue.js component for the game board.
+ * @module juego
+ */
+
+/**
+ * @class juego
+ * @description This component represents the main game board where players can interact with crops.
+ * It allows players to plow land, plant seeds, water crops, and trigger various actions.
+ *
+ * @property {string} pasto - The image URL for the grass sprite.
+ * @property {string} tierra - The image URL for the tilled land sprite.
+ * @property {number} columns - The number of columns in the game board grid.
+ * @property {number} cells - The number of cells per column in the game board grid.
+ * @property {Object|null} seleccionado - The currently selected fruit/crop for planting.
+ * @property {Array<Object>} frutos - An array of available fruits/crops with their types, seed images, growth images, and harvest names.
+ * @property {Array<Array<Object>>} sprites - A 2D array representing the game board, where each object contains sprite information for a cell.
+ *
+ * @fires juego#arar - Emits an 'arar' event when a cell is plowed.
+ * @fires juego#sembrar - Emits a 'sembrar' event when a seed is planted on a cell.
+ * @fires juego#regar - Emits a 'regar' event when crops are watered.
+ * @fires juego#seleccionar-fruto - Emits a 'seleccionar-fruto' event when a fruit is selected for planting.
+ * @fires juego#acciones - Emits an 'acciones' event when an action is performed on a cell.
+ *
  */
 app.component('juego',{
-    /**
-     * Component props.
-     * @memberof GameComponent
-     * @property {string} pasto - Path to the grass image.
-     * @property {string} tierra - Path to the soil image.
-     * @property {number} columns - Number of columns in the grid.
-     * @property {number} cells - Number of cells per column.
-     * @property {Object|null} seleccionado - The selected fruit.
-     * @property {Array<Object>} sprites - The game board sprites.
-     * @property {Array<Object>} frutos - The available fruits.
+
+     /**
+     * Component props 
+     * @typedef {Object} escenario
+     * @property {string} pasto
+     * @property {string} tierra
+     * @property {number} columns
+     * @property {number} cells
+     * @property {Object|null}seleccionado
+     * @property {Objet[]} sprites
+     * @property {Object[]} frutos
+     * 
      */
+
      props:{
-        /** @type {string} */
+       
+
+         /** @type {string} pasto */
         pasto: {
             type: String,
             required: true
         },
-        /** @type {string} */
+         /** @type {string} tierra */
         tierra: {
             type: String,
             required: true
         },
-        /** @type {number} */
+         /** @type {number} columns */
         columns: {
             type: Number,
             required: true
         },
-        /** @type {number} */
+         /** @type {number} cells */
         cells: {
             type: Number,
             required: true
         },
-        /** @type {Object|null} */
+
+         /** @type {Object|null} seleccionado */
         seleccionado: {
             type: Object,
             default: null
         },
-        /** @type {Array<Object>} */
+
+         /** @type {Array<Object>} frutos */
         frutos: {
             type: Array,
             required: true
         },
-        /** @type {Array<Object>} */
+        
+         /** @type {Array<Object>} sprites */
         sprites:{
           type:Array,
           required:true
         }
+
+ },
+
+      /**
+     * Computed properties 
+     * @namespace juegoComputed
+     */
+    
+ 
+  computed: {
+  
+  },
+  methods: {
+/*En proceso */
+   
+    arar(indexColumn, indexCell){
+        this.$emit('arar', indexColumn, indexCell);
+    },
+    sembrar(indexColumn, indexCell){
+        this.$emit('sembrar', indexColumn, indexCell);
     },
 
-    /**
-     * Component methods.
-     * @memberof GameComponent
-     */
-    methods: {
-        /**
-         * @memberof GameComponent
-         * @method arar
-         * @description Emits an event to the parent component to till a specific plot of land. This method facilitates communication from the child component to the parent, signaling a user's intent to till the soil at the given coordinates.
-         * @param {number} indexColumn - The column index of the plot to till.
-         * @param {number} indexCell - The row index of the plot to till.
-         */
-        arar(indexColumn, indexCell){
-            this.$emit('arar', indexColumn, indexCell);
-        },
-        /**
-         * @memberof GameComponent
-         * @method sembrar
-         * @description Emits an event to the parent component to plant a seed in a specific plot. This allows the parent component to handle the logic of planting, such as updating the plot's state and appearance.
-         * @param {number} indexColumn - The column index of the plot where the seed should be planted.
-         * @param {number} indexCell - The row index of the plot where the seed should be planted.
-         */
-        sembrar(indexColumn, indexCell){
-            this.$emit('sembrar', indexColumn, indexCell);
-        },
-        /**
-         * @memberof GameComponent
-         * @method regar
-         * @description Emits an event to the parent component to water a specific plot of land. This delegates the watering action to the parent, which will manage the subsequent changes in the plant's growth state.
-         * @param {number} indexColumn - The column index of the plot to water.
-         * @param {number} indexCell - The row index of the plot to water.
-         */
-        regar(indexColumn, indexCell){
-          this.$emit('regar', indexColumn, indexCell);
-        },
-        /**
-         * @memberof GameComponent
-         * @method seleccionarFruto
-         * @description Emits an event to the parent component when a user selects a fruit to plant. This passes the chosen fruit object to the parent, allowing it to update the game's state accordingly.
-         * @param {Object} fruto - The fruit object that has been selected by the user.
-         */
-         seleccionarFruto(fruto) {
-          this.$emit('seleccionar-fruto', fruto);
-        },
-        /**
-         * @memberof GameComponent
-         * @method acciones
-         * @description Emits a general-purpose 'acciones' event to the parent component, indicating that a user has interacted with a plot of land. The parent component is responsible for determining the appropriate action based on the game's current state (e.g., tilling, planting, watering).
-         * @param {number} indexColumn - The column index of the interacted plot.
-         * @param {number} indexCell - The row index of the interacted plot.
-         */
-        acciones(indexColumn, indexCell) {
-        this.$emit('acciones', indexColumn, indexCell);
-        },
+    regar(indexColumn, indexCell){
+      this.$emit('regar', indexColumn, indexCell);
     },
 
-    /**
-     * The HTML template for the component.
-     * @memberof GameComponent
-     * @type {string}
-     */
+     seleccionarFruto(fruto) {
+      this.$emit('seleccionar-fruto', fruto);
+    },
+
+    acciones(indexColumn, indexCell) {
+    this.$emit('acciones', indexColumn, indexCell);
+    },
+    
+  },
+
   template: /*html */ ` 
    <div class="cielo espacio bg-celeste">
         
