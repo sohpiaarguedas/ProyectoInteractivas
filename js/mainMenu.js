@@ -1,8 +1,12 @@
+/**
+ * Main menu component.
+ * @namespace MainMenuComponent
+ */
 app.component('mainMenu',{
     /** 
     * Component props - Data received from parent component
-    * @typedef {Object} signUp
-    * @property {users} users - Users Object 
+    * @memberof MainMenuComponent
+    * @property {Object} users - Users Object 
     */
     props:{
         users:{
@@ -17,22 +21,16 @@ app.component('mainMenu',{
     methods:{
 
     },
+    /**
+     * The HTML template for the component.
+     * @memberof MainMenuComponent
+     * @type {string}
+     */
     template: /*html*/ `
-    <div class="center">
-        <h1>Sign up</h1>
-        <form action="">
-            <label class="row text-l" for="">Email</label>
-            <input class="space-margin color-white" type="text" v-model="users.email">
-            <label class="row text-l" for="">Birthdate</label>
-            <input class="space-margin color-white"  type="text" v-model="users.birthdate">
-            <label class="row text-l" for="">Username</label>
-            <input class="space-margin color-white" type="text" v-model="users.username">
-            <label class="row text-l" for="">Password</label>
-            <input class="space-margin color-white" type="password" v-model="users.password">
-            <button class="bg-btn color-white bold space-margin" type="submit">Sign up</button>
-        </form>
-        <p class="text-xl "> Already have an account?</p>
-        <p class="text-l"><a href="login.html" class="bg-btn no-decoration color-white bold space-margin">login</a></p>
+    <div class="center column">
+        <h1 class="text-xl">Dealing with farming</h1>
+        <button class="bg-btn color-white bold space-margin" onclick="window.location.href='juego.html'">Jugar</button>
+        <button class="bg-btn color-white bold space-margin" onclick="window.location.href='instrucciones.html'">Instrucciones</button>
     </div>
     `
 })

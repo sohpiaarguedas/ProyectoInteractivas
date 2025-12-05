@@ -1,8 +1,17 @@
+/**
+ * Sign-up component.
+ * @namespace SignUpComponent
+ */
 app.component('sign-up', {
     props: {
 
 
     },
+    /**
+     * Component data.
+     * @memberof SignUpComponent
+     * @returns {Object} The component's data.
+     */
     data() {
         return {
             registerData: {
@@ -17,7 +26,16 @@ app.component('sign-up', {
     computed: {
 
     },
+    /**
+     * Component methods.
+     * @memberof SignUpComponent
+     */
     methods: {
+        /**
+         * @memberof SignUpComponent
+         * @method addUser
+         * @description Handles the user registration process. This asynchronous method first validates that the provided passwords match. If they do, it sends the user's registration data to the backend API. It logs the server's response upon successful registration. If there's an error during the process, it logs the error details.
+         */
         async addUser() {
             if (this.registerData.password !== this.registerData.password_confirmation) {
                 alert('Las contraseñas no coinciden');
@@ -37,6 +55,11 @@ app.component('sign-up', {
         }
 
     },
+    /**
+     * The HTML template for the component.
+     * @memberof SignUpComponent
+     * @type {string}
+     */
     template: /*html*/ `
     <div class="center">
         <h1>Sign up</h1>

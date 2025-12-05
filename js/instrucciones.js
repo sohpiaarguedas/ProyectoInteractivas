@@ -1,3 +1,8 @@
+/**
+ * Instructions component.
+ * @namespace InstructionsComponent
+ * @property {string} template - The HTML template for the component.
+ */
 app.component('instrucciones',{
     template:  /*html */`
     <div class="center column color-white bold text-overflow">

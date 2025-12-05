@@ -1,11 +1,20 @@
+/**
+ * Login component.
+ * @namespace LoginComponent
+ */
 app.component('login', {
     /** 
     * Component props - Data received from parent component
-    * @typedef {Object} signUp
-    * @property {users} users - Users Object 
+    * @memberof LoginComponent
+    * @property {Object} users - Users Object 
     */
     props: {
     },
+    /**
+     * Component data.
+     * @memberof LoginComponent
+     * @returns {Object} The component's data.
+     */
     data() {
         return {
             loginData: {
@@ -17,7 +26,16 @@ app.component('login', {
     computed: {
 
     },
+    /**
+     * Component methods.
+     * @memberof LoginComponent
+     */
     methods: {
+        /**
+         * @memberof LoginComponent
+         * @method tryLogin
+         * @description Handles the user login process. This asynchronous method sends the user's credentials to the backend API. Upon successful authentication, it stores the access token and user data in local storage, then redirects the user to the main menu. If authentication fails, it logs the error and displays an alert to the user.
+         */
         async tryLogin() {
             try {
 
@@ -44,6 +62,11 @@ app.component('login', {
             }
         }
     },
+    /**
+     * The HTML template for the component.
+     * @memberof LoginComponent
+     * @type {string}
+     */
     template: /*html*/ `
      
 
